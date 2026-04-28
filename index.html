@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objectif Cross 3000€</title>
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system, Arial;
+  background:#0f172a;
+  color:white;
+}
+
+.app{
+  max-width:400px;
+  margin:auto;
+  padding:15px;
+}
+
+h1{
+  margin:0;
+  font-size:22px;
+}
+
+.card{
+  background:#1e293b;
+  padding:15px;
+  border-radius:15px;
+  margin-top:10px;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+}
+
+input{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#0f172a;
+  color:white;
+}
+
+button{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  font-weight:bold;
+}
+
+.sale{
+  display:flex;
+  justify-content:space-between;
+  background:#0f172a;
+  padding:10px;
+  border-radius:10px;
+  margin-top:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <h1>Objectif 3000€</h1>
+
+  <div class="card">
+    <div>Total : <b id="total">0</b> €</div>
+    <div>Reste : <b id="left">3000</b> €</div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="item" placeholder="Objet vendu">
+      <input id="price" type="number" placeholder="Prix">
+    </div>
+    <button onclick="add()">Ajouter</button>
+  </div>
+
+  <div class="card" id="list"></div>
+</div>
+
+<script>
+let goal = 3000;
+let sales = JSON.parse(localStorage.getItem("sales") || "[]");
+
+function save(){
+  localStorage.setItem("sales", JSON.stringify(sales));
+}
+
+function render(){
+  let total = sales.reduce((s,x)=>s+Number(x.price),0);
+  document.getElementById("total").innerText = total;
+  document.getElementById("left").innerText = goal-total;
+
+  let html = "";
+  sales.forEach((s)=>{
+    html += <div class="sale">${s.item} - ${s.price}€</div>;
+  });
+
+  document.getElementById("list").innerHTML = html;
+}
+
+function add(){
+  let item = document.getElementById("item").value;
+  let price = document.getElementById("price").value;
+
+  if(!item || !price) return;
+
+  sales.push({item,price});
+  save();
+  render();
+
+  document.getElementById("item").value="";
+  document.getElementById("price").value="";
+}
+
+render();
+</script>
+
+</body>
+</html>
