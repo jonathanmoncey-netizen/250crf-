@@ -117,7 +117,7 @@ body{
 
 .inputs{
   display:grid;
-  grid-template-columns:1fr 105px;
+  grid-template-columns:1fr 120px;
   gap:10px;
 }
 
@@ -130,6 +130,7 @@ input{
   color:white;
   padding:0 15px;
   font-size:16px;
+  width:100%;
 }
 
 input::placeholder{color:#64748b}
@@ -251,7 +252,7 @@ button{
   <div class="form">
     <div class="inputs">
       <input id="item" placeholder="Objet vendu">
-      <input id="price" type="number" inputmode="decimal" placeholder="Prix €">
+      <input id="price" type="number" inputmode="decimal" placeholder="€">
     </div>
     <button onclick="addSale()">+ Ajouter la vente</button>
   </div>
